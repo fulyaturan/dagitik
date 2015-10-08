@@ -5,7 +5,7 @@ mu1=2.0
 mu2=4.0
 sigma1=0.6
 sigma2=1.4
-
+#s
 
 x1=np.random.normal(mu1,sigma1,10000)
 x2=np.random.normal(mu2,sigma2,10000)
