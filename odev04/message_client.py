@@ -8,6 +8,9 @@ host =socket.gethostname()
 port = 12345
 s.connect((host, port))
 
-s.send('heeey')
+while True:
+    s.send('heeey')
+    message=s.recv(1024)
+    print message
 
 s.close()
