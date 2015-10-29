@@ -12,7 +12,7 @@ class readThread (threading.Thread):
             message = self.sa.recv(1024)
             print message
         self.sa.close()
-    print 'bbb'
+ 
 
 
 class writeThread (threading.Thread):
@@ -21,8 +21,11 @@ class writeThread (threading.Thread):
         self.sa = sa
     def run(self):
         while True:
+            konsol=''
             konsol=raw_input()
             self.sa.send(konsol)
+            if konsol=='bitir'
+                s.close()
         self.sa.close()
 
 
