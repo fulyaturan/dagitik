@@ -22,10 +22,12 @@ class  myThread (threading.Thread):
                print('baglantı saglanamadı')
                break
             else:
-                c.send('peki' +str(addr))
-
+              self.clientSocket.send('peki' +str(self.clientAddr))
+            if(random.randrange(0,40) % 2 == 0):
+                self.clientSocket.send('Merhaba, saat su an ' + time.strftime("%H:%M:%S"))
 
         print "Ending Thread-" +str(self.threadID)
+        self.clientSocket.close()
 
 
 s = socket.socket()
