@@ -17,12 +17,16 @@ class  myThread (threading.Thread):
         print"Starting Thread-" +str(self.threadID)
 
         while True:
-            data=c.recv(1024)
-            if data=='':
-               print('baglantı saglanamadı')
+
+            try:
+                data=self.clientSocket.recv(2048)
+            except:
+                data=""
+            if data=="":
+               print('baglantı saglanamadi')
                break
             else:
-              self.clientSocket.send('peki' +str(self.clientAddr))
+                self.clientSocket.send('peki' +str(self.clientAddr))
             if(random.randrange(0,40) % 2 == 0):
                 self.clientSocket.send('Merhaba, saat su an ' + time.strftime("%H:%M:%S"))
 
@@ -36,9 +40,9 @@ port = 12345
 s.bind((host, port))
 s.listen(5)
 while True:
-    print "Waiting for connection"
+    print "Waiting for connection\n"
     c, addr = s.accept()
-    print'Got a connection from', addr
+    print'Got a connection from\n', addr
     threadCounter += 1
     thread = myThread(threadCounter, c, addr)
     thread.start()
