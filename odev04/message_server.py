@@ -19,7 +19,8 @@ class  myThread (threading.Thread):
         while True:
             data=c.recv(1024)
             if data=='':
-               print('olmaz')
+               print('baglantı saglanamadı')
+               break
             else:
                 c.send('peki' +str(addr))
 
