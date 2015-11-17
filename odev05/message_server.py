@@ -184,10 +184,17 @@ host =socket.gethostname()
 port = 12345
 s.bind((host, port))
 s.listen(5)
+logThread = LoggerThread("log.txt")
+logThread.start()
+
+
+lQueue=Queue.Queue
 while True:
     c, addr = s.accept()
     print 'Got connection from', addr
     clientQueue=Queue.Queue()
     threadCounter += 1
-    rthread = ReadThread(threadCounter, c, addr, clientQueue)
+    rthread = ReadThread(threadCounter, c, addr, clientQueue,lQueue,fihrist)
     rthread.start()
+    wrhread = WriteThread(threadCounter, c, addr, clientQueue,lQueue)
+    wrhread.start()
