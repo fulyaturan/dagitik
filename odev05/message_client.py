@@ -61,7 +61,7 @@ class ReadThread (threading.Thread):
     def run(self) :
         while True:
             data = self.csoc.recv(1024)
-
+            self.incoming_parser(data)
 class WriteThread (threading.Thread):
     def __init__(self, name, csoc, threadQueue):
         threading.Thread.__init__(self)
