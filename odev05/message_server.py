@@ -6,10 +6,10 @@ import time
 fihrist={}
 
 class LoggerThread (threading.Thread):
-    def __init__(self, name, logQueue, fid):
+    def __init__(self,fid):
             threading.Thread.__init__(self)
-            self.name = name
-            self.lQueue = logQueue
+           # self.name = name
+            #self.lQueue = logQueue
 # dosyayi appendable olarak ac
             self.fid =open("log.txt","a")
 
@@ -68,13 +68,13 @@ class WriteThread(threading.Thread):
 
 class ReadThread (threading.Thread):
 
-    def __init__(self,name,cSocket, address, threadQueue):
+    def __init__(self,name,cSocket, address, threadQueue,logQueue,fihrist):
         threading.Thread.__init__(self)
         self.name = name
         self.cSocket = cSocket
         self.address = address
-       # self.lQueue = logQueue
-       # self.fihrist = fihrist
+        self.lQueue = logQueue
+        self.fihrist = fihrist
         self.tQueue = threadQueue
 
     def parser(self, data):
@@ -96,7 +96,7 @@ class ReadThread (threading.Thread):
                 response = "HEL" + nickname
                 fihrist[self.nickname]=clientQueue
                 # fihristi guncelle
-                self.fihrist.update(nickname,clientQueue)
+                self.fihrist.update(nickname+":"+clientQueue)
                 self.lQueue.put(self.nickname + " has joined.")
                 return 0
             else:
@@ -107,12 +107,16 @@ class ReadThread (threading.Thread):
                 self.csoc.close()
                 return 1
         elif data[0:3] == "QUI":
-            response = "BYE " + self.name
-            # fihristten sil
-            del fihrist[self.name]
-            # log gonder
-            # baglantiyi sil
-            self.csoc.close()
+            if self.nickname != "":
+                response = "BYE " + self.name
+                # fihristten sil
+                del fihrist[self.name]
+                # log gonder
+                # baglantiyi sil
+                self.csoc.close()
+            else:
+                response = "ERL"
+                self.cSocket.send(response)
         elif data[0:3] == "LSQ":
             list = " "
             for nick in fihrist:
@@ -131,13 +135,18 @@ class ReadThread (threading.Thread):
             self.cSocket.send("SOK")        
             
         elif data[0:3] == "MSG":
+            gelen = data[4:]
+            gelendizi=gelen.split(":")
+            to_nickname=gelendizi[0]
+            message=gelendizi[1]
             if not to_nickname in self.fihrist.keys():
                 response = "MNO"
             else :
                 
-                queue_message = (to_nickname, self.nickname, message)
+                
+                #queue_message = (to_nickname, self.nickname, message)
                 # gonderilecek threadQueueyu fihristten alip icine yaz
-                self.fihrist[to_nickname].put(queue_message)
+                self.tQueue.put(to_nickname, self.nickname, message)
                 response = "MOK"
             self.csend(response)
         else:
