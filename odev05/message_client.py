@@ -131,6 +131,11 @@ class ClientDialog(QDialog):
                 nickname=message[0]
                 msg=message[1]
                 self.threadQueue.put("MSG" +nickname +msg)
+                
+             else:
+                self.cprint("Local: Command Error.")
+        else:
+            self.threadQueue.put("SAY "+ data)     
     def run(self) :
         self.show()
         self.qt_app.exec_()
