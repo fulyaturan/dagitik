@@ -1,0 +1,16 @@
+Projede yapılması beklenen peer-to-peer tabanlı bir görüntü işleme platformu oluşturulmasıdır.Yazacagımız yazılımlar aşağıda belirteceğimiz bazı fonksiyonları içermelidir.
+Bütün sistem iki çeşit yazılımdan oluşacaktır: PEER ve NEGOTIATOR.
+İki farklı bağlantı şekli olacaktır: PEER-PEER ve NEGOTIATOR-PEER PEER-PEER bağlantısında amacı veri paylaşımı olan bir protokol bulunacak. NEGOTIATOR-PEER bağlantısının amacı ise PEER buluşturma olacaktır.
+İletişim esnasında kullanılacak bağlantı kodları ve parametreleri şu şekilde olucaktır:
+CON(connect_point):Sisteme dahil olmak isteyen her eş merkezi sunucuya kendi host ve port numarasını içeren bir bağlantı isteği yollayacaktır.
+HEL(connect_point):Merkezi sunucunun bağlantı kabul göstergesi olarak yollayacağı kısım.
+LSQ(Connect_point_list):Bağlanan eşler belirli zaman aralığında merkezi sunucudan bağlı olan eşlerin bağlantı adreslerini talep etmek için bu kodu kullanıcaklardır.
+LST(connect_point_list)Merkezi sunucu talep eden eşlere bağlı olan tüm eşlerin bağlantı adreslerini bu şekilde yollayacaktır.
+TIC(peer_ip,peer_port):Merkezı sunucu yani bağlanan eş ile bağlantı testi yapıcaktır.
+TOC(peer_ip,peer_port):Yeni bağlanan eşin bağlantı onayı
+FUNCQ(connect_point):Bu kod ile eşler birbirine fonksiyon sorgulaması yapabilmektedirler.
+PRMTQ(connect_point): Bu kod ile eşler birbirine parametre sorgulaması yapabilmektedirler.
+LSQP(Connect_point_list):Eşler birbirlerinden bağlı olan eşlerin bağlantı adreslerini talep etmek için bu kodu kullanıcaklardır.
+LSTP(connect_point_list):Eşler talep eden eşlere bağlı olan tüm eşlerin bağlantı adreslerini bu şekilde yollayacaktır.
+EXEC(functions):Eşlerin birbirine execute talebi için kullanıcakları komut.
+EXOK(func):Eşlerin execute talebi için kullanıcakları onay kodu.
