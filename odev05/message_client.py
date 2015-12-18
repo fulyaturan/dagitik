@@ -145,7 +145,7 @@ host = socket.gethostname() # Get local machine name
 port = 12345
 s.connect((host, port))
 
-sendQueue =Queue.Queue
+sendQueue =Queue.Queue()
 app = ClientDialog(sendQueue)
 
 rt = ReadThread("ReadThread", s, sendQueue, app)
