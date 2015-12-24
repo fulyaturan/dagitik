@@ -80,8 +80,7 @@ class WorkerThread (threading.Thread):
 
         return (header, newMessage)
 
-    def Binarize(self,header,patch,threshold):
-        newMessage = [0] * self.patchsize * self.patchsize
+
 
 
     def filterSobel(self, header, patch, threshold):
