@@ -37,6 +37,16 @@ class WorkerThread (threading.Thread):
         for i in range(0,self.patchsize * self.patchsize):
             newMessage[i] = patch[i]
         return (header, newMessage)
+        
+    def Binarize(self,header,patch):
+        newMessage = [0] * self.patchsize * self.patchsize
+        for i in range(0,self.patchsize * self.patchsize):
+            if patch[i] >= 127 :
+                newMessage[i]=255
+            else:
+                newMessage[i]=0
+
+        return (header, newMessage)    
 
     def filterPrewitt(self, header, patch, threshold):
         # convolve the patch with the matrix [-1,-1,-1],[0,0,0][1,1,1]]
@@ -124,9 +134,9 @@ class WorkerThread (threading.Thread):
                 if str(message[0][0]) == "GrayScale":
                     outMessage = self.convertGray(message[0][1], message[1])
                 if str(message[0][0]) == "PrewittFilter":
-                    outMessage = self.filterSobel(message[0][1], message[1], 128)
+                    outMessage = self.filterPrewitt(message[0][1], message[1], 128)
                 if str(message[0][0]) == "BinarizeFilter":
-                    outMessage = self.filterSobel(message[0][1], message[1], 128)
+                    outMessage = self.Binarize(message[0][1], message[1], 128)
                 # self.pLock.acquire()
                 self.outQueue.put(outMessage)
                 # self.pLock.release()
