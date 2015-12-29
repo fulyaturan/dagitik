@@ -86,6 +86,38 @@ class ServerReadThread(threading.Thread):
         self.cSocket.close()
 
 class ClientReadThread(threading.Thread)
+    def  __init__(self, name,serverip,serverport,ip,port):
+         threading.Thread.__init__(self)
+         self.name=name
+         self.serverip=serverip
+         self.serverport=serverport
+         self.ip=ip
+         self.port=port
+         self.s=socket.socket()
+
+    def cparserecv(self,data):
+         data=data.stlip(" ")
+
+         if data[0]=='SALUT':
+             if data[1]=="P":
+                 connect_point_list[self.cSocket,self.address]=("P",time,"S")
+
+             if data[1]=="N":
+                  connect_point_list[self.cSocket,self.address]=("N",time,"S")
+
+         if data[0]=="BUBYE":
+             self.cSocket.close()
+
+   # def cparsersend(self,data):
+    #    data=data.strip()
+
+    def run(self):
+        print "ip: " + str(self.ip) + " - port: " + str(self.port)
+        receivedata=self.s.recv(2048)
+        if receivedata != "":
+                 print "incoming_data: " + receivedata
+                 cmessage = self.cparserecv(receivedata)
+                 print "message: " + cmessage
 
 class ClientThread(threading.Thread):
     def  __init__(self, name, cSocket, address ):
@@ -100,6 +132,7 @@ class ClientThread(threading.Thread):
 
 
     def run(self):
+        
 
 st = ServerThread()
 st.start()
