@@ -6,15 +6,15 @@ import time
 
 connect_point_list={}
 connect_point={}
-class ServerThread(threading.Thread):
-    def  __init__(self, name, cSocket, address, port,threadQueue):
+class ServerReadThread(threading.Thread):
+    def  __init__(self, name, cSocket, address):
          threading.Thread.__init__(self)
          self.name = name
          self.cSocket = cSocket
          self.address = address
-         self.ip=address[0]
-         self.port=port
-         self.tQueue = threadQueue
+         #self.ip=address[0]
+         #self.port=port
+         #self.tQueue = threadQueue
 
     def parser(self,data):
 
@@ -45,6 +45,7 @@ class ServerThread(threading.Thread):
             else :
                 response='REGWA'
                 connect_point_list[(connect_point)]='W',str(currentTime)
+                print connect_point_list
                 self.cSocket.send(response)
 
         if data[0:5]=='GETNL':
@@ -53,11 +54,6 @@ class ServerThread(threading.Thread):
 
 
     def run(self):
-        ip =socket.gethostname()
-        #port = 12345
-        s.bind((ip, self.port))
-        s.listen(4)
-        self.cSocket, self.address = s.accept()
 
         while True:
                 incoming_data = self.cSocket.recv(2048) #clienttan veri bekliyoruz.
@@ -66,7 +62,7 @@ class ServerThread(threading.Thread):
                     message = self.parser(incoming_data)
                     print "message: " + message
                   #  self.tQueue.put(message)      # parser'la ne demek istedigini anliyoruz, ve ona verecegimiz cevabi, kuyrugumuza yaziyoruz
-
+                  
         self.cSocket.close()
 
 
