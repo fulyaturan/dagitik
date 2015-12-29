@@ -72,8 +72,12 @@ class ServerReadThread(threading.Thread):
                 self.cSocket.send(response)
 
         if data[0:5]=='GETNL':
-
-
+            nlsize=int(data[6:])
+            self.cSocket.send("NLIST BEGIN\n")
+            for i,j in len(connect_point_list):
+                print str(connect_point_list.keys()[i]) + ':'+ str(connect_point_list.keys()[i+1]) + ':' + str(connect_point_list.value()[i]) + ':' + str(connect_point_list.value()[i+1]) 
+                print "\n"
+            self.cSocket.send("NLIST END\n")
 
 
     def run(self):
