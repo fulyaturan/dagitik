@@ -23,6 +23,9 @@ class ServerThread(threading.Thread):
             readThread=ServerReadThread("serverreadthread",c,addr)
             print 'Got connection from', addr
             readThread.start()
+            #name,serverip,serverport,ip,port
+            clientThread=ClientThread("clientThread",self.ip,self.port,c,addr)
+            clientThread.start()
             
 class ServerReadThread(threading.Thread):
     def  __init__(self, name, cSocket, address):
@@ -132,6 +135,9 @@ class ClientThread(threading.Thread):
 
 
     def run(self):
+        self.sock.connect(self.serverip,self.serverport)
+        clientreadthread=ClientReadThread("clientreadthread",self.ip,self.port,self.serverip,self.serverport,self.sock)
+        clientreadthread.start()
         
 
 st = ServerThread()
