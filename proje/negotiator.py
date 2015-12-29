@@ -90,15 +90,14 @@ class ClientReadThread(threading.Thread)
 class ClientThread(threading.Thread):
     def  __init__(self, name, cSocket, address ):
          threading.Thread.__init__(self)
-         self.name = name
-         self.cSocket = cSocket
-         self.address = address
+           threading.Thread.__init__(self)
+         self.name=name
+         self.serverip=serverip
+         self.serverport=serverport
+         self.ip=ip
+         self.port=port
+         self.sock=socket.socket()
 
-
-    def cparser(self,data):
-         data=data.strip()
-
-        
 
     def run(self):
 
