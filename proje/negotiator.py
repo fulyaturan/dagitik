@@ -61,7 +61,7 @@ class ServerReadThread(threading.Thread):
             self.port=port
           #  connect_point={'ip':'port'}
 
-            if connect_point_list.has_key(ip,port):
+            if connect_point_list.has_key((ip,port)):
                 response='REGOK'+str(currentTime)
                 self.cSocket.send(response)
 
