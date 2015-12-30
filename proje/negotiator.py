@@ -92,17 +92,7 @@ class ServerReadThread(threading.Thread):
                   
         self.cSocket.close()
 
-
-   # def cparsersend(self,data):
-    #    data=data.strip()
-
-    def run(self):
-        print "ip: " + str(self.ip) + " - port: " + str(self.port)
-        receivedata=self.s.recv(2048)
-        if receivedata != "":
-                 print "incoming_data: " + receivedata
-                 cmessage = self.cparserecv(receivedata)
-                 print "message: " + cmessage
+e
 
 class ClientThread(threading.Thread):
     def  __init__(self, name, cSocket, address ):
