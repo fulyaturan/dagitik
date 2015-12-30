@@ -92,28 +92,6 @@ class ServerReadThread(threading.Thread):
                   
         self.cSocket.close()
 
-class ClientReadThread(threading.Thread)
-    def  __init__(self, name,serverip,serverport,ip,port):
-         threading.Thread.__init__(self)
-         self.name=name
-         self.serverip=serverip
-         self.serverport=serverport
-         self.ip=ip
-         self.port=port
-         self.s=socket.socket()
-
-    def cparserecv(self,data):
-         data=data.stlip(" ")
-
-         if data[0]=='SALUT':
-             if data[1]=="P":
-                 connect_point_list[self.cSocket,self.address]=("P",time,"S")
-
-             if data[1]=="N":
-                  connect_point_list[self.cSocket,self.address]=("N",time,"S")
-
-         if data[0]=="BUBYE":
-             self.cSocket.close()
 
    # def cparsersend(self,data):
     #    data=data.strip()
@@ -140,8 +118,37 @@ class ClientThread(threading.Thread):
 
     def run(self):
         self.sock.connect(self.serverip,self.serverport)
-        clientreadthread=ClientReadThread("clientreadthread",self.ip,self.port,self.serverip,self.serverport,self.sock)
-        clientreadthread.start()
+      #  clientreadthread=ClientReadThread("clientreadthread",self.ip,self.port,self.serverip,self.serverport,self.sock)
+      #  clientreadthread.start()
+      ConnextionControl=ConnextionControlThread("connectioncontrolthread",self.ip,self.port)
+      ConnextionControl.start()
+        
+#10 dakikada bir peer'lara burda misin kontrolü yapicaz
+class ConnextionControlThread(threading.Thread):
+     def  __init__(self, name,ip,port):
+         threading.Thread.__init__(self)
+         self.name=name
+         self.ip=ip
+         self.port=port
+
+     def run(self):
+         while True:
+             time.sleep(600)
+             for i in len(connect_point_list):
+                s=socket.socket()
+             s.connect(connect_point_list.keys()[i],connect_point_list.vales()[i])
+             s.send("HELLO")
+             data=s.recv(1024)
+             if data[0]=='SALUT':
+                if data[1]=="P":
+                     connect_point_list[self.ip,self.port]=("P",time,"S")
+
+                if data[1]=="N":
+                  connect_point_list[self.ip,self.port]=("N",time,"S")
+
+             s.send("CLOSE")
+             if data[0]=="BUBYE":
+                         s.close()
         
 
 st = ServerThread()
